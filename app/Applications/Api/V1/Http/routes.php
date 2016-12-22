@@ -24,6 +24,9 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
         });
 
         Route::group(['middleware' => ['jwt.auth', /*'jwt.refresh'*/]], function () {
+            
+            Route::post('addproduct', 'ProductController@addProduct');
+
             Route::get('me', 'Auth\AuthController@me');
 
             Route::put('me', 'Auth\AuthController@update');
