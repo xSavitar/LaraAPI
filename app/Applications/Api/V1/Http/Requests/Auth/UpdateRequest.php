@@ -25,8 +25,6 @@ class UpdateRequest extends Request
     {
         return [
             'name' => 'unique:users,name,'.auth()->user()->id,
-            'address' => '',
-            'telephone' => '',
             'email' => 'email|unique:users,email,'.auth()->user()->id
         ];
     }
@@ -40,8 +38,6 @@ class UpdateRequest extends Request
     {
         return [
             'name' => 'nome',
-            'address' => 'endereço',
-            'telephone' => 'telefone',
             'email' => 'email',
         ];
     }

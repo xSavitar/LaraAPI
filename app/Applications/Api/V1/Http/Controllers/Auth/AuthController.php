@@ -57,7 +57,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $fields = array_merge(
-            $request->only('name', 'address', 'telephone', 'email', 'password'),
+            $request->only('name', 'email', 'password'),
             ['password' => bcrypt($request->get('password'))]
         );
 
@@ -85,7 +85,7 @@ class AuthController extends Controller
      */
     public function update(UpdateRequest $request)
     {
-        $fields = $request->only(['name', 'email', 'address', 'telephone']);
+        $fields = $request->only(['name', 'email']);
 
         $this->userRepository->update($fields, auth()->user()->id);
 

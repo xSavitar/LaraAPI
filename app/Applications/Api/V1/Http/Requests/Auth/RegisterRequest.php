@@ -25,8 +25,6 @@ class RegisterRequest extends Request
     {
         return [
             'name' => 'required|unique:users',
-            'address' => 'required',
-            'telephone' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8',
             'password_confirmation' => 'required|same:password'
@@ -42,8 +40,6 @@ class RegisterRequest extends Request
     {
         return [
             'name' => 'nome',
-            'address' => 'endereço',
-            'telephone' => 'telefone',
             'email' => 'email',
             'password' => 'senha',
             'password_confirmation' => 'confirmação de senha'
