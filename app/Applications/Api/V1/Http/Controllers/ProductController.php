@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function addProduct(Request $request)
     {
-        if(auth()->user()){
+        if(auth()->user()->token == $request->get('token')){
             $product = new \App\Domains\Product;
             $product->Category = $request->get('category');
             $product->ProductName = $request->get('productname');

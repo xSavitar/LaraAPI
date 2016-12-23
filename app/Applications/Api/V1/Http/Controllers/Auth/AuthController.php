@@ -33,7 +33,7 @@ class AuthController extends Controller
      * @param AuthenticateRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function authenticate(AuthenticateRequest $request)
+    /*public function authenticate(AuthenticateRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -45,8 +45,10 @@ class AuthController extends Controller
             return $this->ApiResponse('Could not create token', 500);
         }
 
+        $token = auth()->user()->token;
+
         return $this->ApiResponse(compact('token'));
-    }
+    }*/
 
     /**
      * Register a new user
@@ -64,6 +66,10 @@ class AuthController extends Controller
         $user = $this->userRepository->skipPresenter()->create($fields);
 
         $token = JWTAuth::fromUser($user);
+
+        $userUpdate = \App\Domains\Users\User::find($user->id);
+        $userUpdate->token = $token;
+        $userUpdate->save();
 
         return $this->ApiResponse(compact('token'));
     }
