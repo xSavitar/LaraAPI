@@ -37,7 +37,7 @@ class UpdateRequest extends Request
     public function attributes()
     {
         return [
-            'name' => 'nome',
+            'name' => 'name',
             'email' => 'email',
         ];
     }

@@ -39,10 +39,10 @@ class RegisterRequest extends Request
     public function attributes()
     {
         return [
-            'name' => 'nome',
+            'name' => 'name',
             'email' => 'email',
-            'password' => 'senha',
-            'password_confirmation' => 'confirmação de senha'
+            'password' => 'password',
+            'password_confirmation' => 'password confirmation'
         ];
     }
 }

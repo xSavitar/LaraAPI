@@ -38,7 +38,7 @@ class AuthenticateRequest extends Request
     {
         return [
             'email' => 'email',
-            'password' => 'senha',
+            'password' => 'password',
         ];
     }
 }
