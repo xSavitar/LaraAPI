@@ -10,7 +10,7 @@
 Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
 
     Route::group(['prefix' => 'v1'], function (){
-        //Route::post('login', 'Auth\AuthController@authenticate');
+        Route::post('login', 'Auth\AuthController@authenticate');
 
         Route::post('register', 'Auth\AuthController@register');
 
@@ -23,7 +23,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'cors'], function () {
             abort(404);
         });
 
-        Route::group(['middleware' => ['jwt.auth', /*'jwt.refresh'*/]], function () {
+        Route::group(['middleware' => ['jwt.auth', 'auth', /*'jwt.refresh'*/]], function () {
             
             Route::post('addproduct', 'ProductController@addProduct');
 

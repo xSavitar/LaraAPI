@@ -3,6 +3,7 @@
 namespace App\Applications\Api\V1\Http\Controllers\Auth;
 
 use App\Applications\Api\V1\Http\Requests\Auth\UpdateRequest;
+use Auth;
 use Illuminate\Http\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Core\Http\Controllers\Controller;
@@ -11,6 +12,7 @@ use App\Applications\Api\Traits\Rest\ResponseHelpers;
 use App\Domains\Users\Repositories\UserRepositoryInterface;
 use App\Applications\Api\V1\Http\Requests\Auth\RegisterRequest;
 use App\Applications\Api\V1\Http\Requests\Auth\AuthenticateRequest;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -33,22 +35,26 @@ class AuthController extends Controller
      * @param AuthenticateRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    /*public function authenticate(AuthenticateRequest $request)
+    public function authenticate(AuthenticateRequest $request)
     {
         $credentials = $request->only('email', 'password');
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            /*if (! $token = JWTAuth::attempt($credentials)) {
                 return $this->ApiResponse('Invalid Credentials', 401);
+            }*/
+            if(Auth::attempt($credentials)){
+                $token = auth()->user()->token;
+                return $this->ApiResponse(compact('token'));
             }
-        } catch (JWTException $e) {
+        } /*catch (JWTException $e) {
+            return $this->ApiResponse('Could not create token', 500);
+        }*/
+        catch (Exception $e){
             return $this->ApiResponse('Could not create token', 500);
         }
-
-        $token = auth()->user()->token;
-
-        return $this->ApiResponse(compact('token'));
-    }*/
+        //return $this->ApiResponse(compact('token'));
+    }
 
     /**
      * Register a new user
@@ -79,9 +85,13 @@ class AuthController extends Controller
      *
      * @return JsonResponse
      */
-    public function me()
+    public function me(Request $request)
     {
-        return $this->ApiResponse($this->userRepository->find(auth()->user()->id));
+        if($request->get('token') == auth()->user()->token){
+            return $this->ApiResponse(auth()->user());
+        } else {
+            return $this->ApiResponse("Invalid token", 401);
+        }
     }
 
     /**
